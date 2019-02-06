@@ -16,19 +16,7 @@ class AbstractBoshqarma(models.Model):
         abstract = True
 
 
-# class BoshBoshqarmaMarkaz(AbstractBoshqarma):
-#     # yuridik adresi
-#     viloyat = models.ForeignKey('Viloyat', related_name='boshboshqarmalar', on_delete=models.PROTECT)
-#
-#
-#
-# class Boshqarma(AbstractBoshqarma):
-#     # yuridik adresi
-#     viloyat = models.ForeignKey('Viloyat', related_name='boshqarmalar', on_delete=models.PROTECT)
-#
-#
-#
-# class Bolim(AbstractBoshqarma):
-#     # yuridik adresi
-#     tuman = models.ForeignKey('Tuman', related_name='bolimlar', on_delete=models.PROTECT)
-#
+class Item(models.Model):
+    text = models.TextField(default='')
+
+
