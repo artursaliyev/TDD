@@ -7,40 +7,23 @@ from lists.models import Item
 
 class HomePageTest(TestCase):
 
-    def test_home_page_returns_correct_html(self):
-        response = self.client.get('/')
-        html = response.content.decode('utf8')
-        self.assertTrue(html.startswith('<html>'))
-        self.assertIn('<title> To - Do lists</title>', html)
-        self.assertTrue(html.endswith('</html>'), html)
-
     def test_used_home_template(self):
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'lists/home.html')
 
     def test_can_save_a_POST_request(self):
-        response = self.client.post('/', data={'item_text': 'A new list item'})
+        self.client.post('/', data={'item_text': 'A new list item'})
         self.assertEqual(Item.objects.count(), 1)
         self.assertEqual(Item.objects.first().text, 'A new list item')
 
     def test_redirects_after_POST(self):
         response = self.client.post('/', data={'item_text': 'A new list item'})
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['location'], '/')
+        self.assertEqual(response['location'], "/lists/one/")
 
     def test_only_saved_items_when_necessary(self):
         self.client.get('/')
         self.assertEqual(Item.objects.count(), 0)
-
-    def test_displays_all_list_items(self):
-        """тест: отображаются все елементы списка"""
-        Item.objects.create(text='Item 1')
-        Item.objects.create(text='Item 2')
-
-        response = self.client.get('/')
-
-        self.assertIn('Item 1', response.content.decode())
-        self.assertIn('Item 2', response.content.decode())
 
 
 class ItemModelTest(TestCase):
@@ -63,5 +46,24 @@ class ItemModelTest(TestCase):
 
         self.assertEqual(first_saved_item.text, 'The first (ever) list item')
         self.assertEqual(second_saved_item.text, 'Item the second')
+
+
+class ListViewTest(TestCase):
+
+    def test_used_list_template(self):
+        """тест: используется шаблон списка"""
+        response = self.client.get('/lists/one/')
+        self.assertTemplateUsed(response, 'lists/list.html')
+
+    def test_displays_all_list_items(self):
+        """тест: отображаются все елементы списка"""
+
+        Item.objects.create(text='Item 1')
+        Item.objects.create(text='Item 2')
+
+        response = self.client.get('/lists/one/')
+
+        self.assertContains(response, 'Item 1')
+        self.assertContains(response, 'Item 2')
 
 

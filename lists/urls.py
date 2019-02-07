@@ -5,6 +5,7 @@ from . import views
 app_name = 'lists'
 urlpatterns = [
     path('', views.home_page, name='index'),
+    path('lists/one/', views.view_list, name='view_list')
 
 ]
 
