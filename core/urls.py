@@ -2,11 +2,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-
+from lists import views as list_views
+from lists import urls as list_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('lists.urls', namespace='users'))
+    path('', list_views.home_page, name='index'),
+    path('lists/', include(list_urls, namespace='lists'))
 ]
 
 
