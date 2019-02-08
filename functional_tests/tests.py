@@ -89,7 +89,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Купить молоко')
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('Купить молоко')
+        self.wait_for_row_in_list_table('1: Купить молоко')
 
         # Фрэнсис получает уникальный URL-адрес
         francis_list_url = self.browser.current_url
@@ -97,9 +97,9 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertNotEqual(francis_list_url, edith_list_url)
 
         # Опять-таки, нет ни следа от списка Эдит
-        page_text = self.browser.find_element_by_id('id_new_item').text
-        self.assertNotEqual('Купить павлиньи перья', page_text)
-        self.assertEqual('Купить молоко', page_text)
+        page_text = self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('Купить павлиньи перья', page_text)
+        self.assertIn('Купить молоко', page_text)
 
 
 
