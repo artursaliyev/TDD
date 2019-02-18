@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.urls import resolve
 from django.utils.html import escape
 
+from lists.forms import ItemForm
 from lists.views import home_page
 from lists.models import Item, List
 
@@ -10,8 +11,16 @@ from lists.models import Item, List
 class HomePageTest(TestCase):
 
     def test_used_home_template(self):
+        """тест: использует домашний шаблон"""
+
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'lists/home.html')
+
+    def test_uses_home_template(self):
+        """тест: домашняя страница использует форму для элемент"""
+
+        response = self.client.get('/')
+        self.assertIsInstance(response.context['form'], ItemForm)
 
 
 class ListViewTest(TestCase):
