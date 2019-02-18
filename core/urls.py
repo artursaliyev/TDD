@@ -8,7 +8,7 @@ from lists import urls as list_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', list_views.home_page, name='index'),
-    path('lists/', include(list_urls, namespace='lists'))
+    path('lists/', include(list_urls))
 ]
 
 
