@@ -53,9 +53,10 @@ class ListAndItemModelTest(TestCase):
             item.save()
             item.clean_fields()
 
+    def test_get_absolute_url(self):
+        """тест: получен абсолютный ur"""
 
-class NewItemTest(TestCase):
-    """тест нового элемента списка"""
+        list_ = List.objects.create()
+        self.assertEqual(list_.get_absolute_url(), f'/lists/{list_.id}/')
 
-    pass
 

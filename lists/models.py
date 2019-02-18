@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
 
 
 class User(AbstractUser):
@@ -23,4 +24,7 @@ class Item(models.Model):
 
 class List(models.Model):
     pass
+
+    def get_absolute_url(self):
+        return reverse('lists:view_list', args=[self.id])
 
