@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.http import HttpRequest, HttpResponse
 from django.test import TestCase
 from django.urls import resolve
@@ -36,6 +37,21 @@ class ListAndItemModelTest(TestCase):
         self.assertEqual(second_saved_item.text, 'Item the second')
         self.assertEqual(second_saved_item.list, list_)
 
+    def test_cannot_save_empty_list_items(self):
+        """ест: нельзя добавлять пустые элементы списк"""
+
+        list_ = List.objects.create()
+        item = Item(list=list_, text='')
+        with self.assertRaises(ValidationError):
+            item.save()
+            item.full_clean()
+
+    def test_validate_fields_in_item(self):
+        list_ = List.objects.create()
+        item = Item(list=list_, text='')
+        with self.assertRaises(ValidationError):
+            item.save()
+            item.clean_fields()
 
 
 class NewItemTest(TestCase):
@@ -63,6 +79,3 @@ class NewItemTest(TestCase):
                                     data={'item_text': 'A new item for an existing list'})
 
         self.assertRedirects(response, f'/lists/{correct_list.id}/')
-
-
-

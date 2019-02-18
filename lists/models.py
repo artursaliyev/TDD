@@ -17,7 +17,7 @@ class AbstractBoshqarma(models.Model):
 
 
 class Item(models.Model):
-    text = models.TextField(default='')
+    text = models.TextField()
     list = models.ForeignKey('List', on_delete=models.CASCADE, default=None)
 
 
