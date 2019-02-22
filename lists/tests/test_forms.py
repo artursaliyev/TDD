@@ -1,3 +1,5 @@
+from unittest import skip
+
 from django.test import TestCase
 from lists.forms import (ItemForm, EMPTY_ITEM_ERROR, DUPLICATE_ITEM_ERROR, ExitingListItemForm)
 from lists.models import List, Item
@@ -55,4 +57,12 @@ class ExitingListItemFormTest(TestCase):
         form = ExitingListItemForm(for_list=list_, data={'text': 'no twins!'})
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors['text'], [DUPLICATE_ITEM_ERROR])
+
+    def test_form_save(self):
+        """тест сохранения формы"""
+        list_ = List.objects.create()
+        form = ExitingListItemForm(for_list=list_, data={'text': 'hi'})
+        new_form = form.save()
+        self.assertEqual(new_form, Item.objects.all()[0])
+
 
