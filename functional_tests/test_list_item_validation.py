@@ -76,3 +76,9 @@ class ItemValidationTest(FunctionalTest):
         self.wait_for(lambda: self.assertEqual(self.browser.find_element_by_css_selector('.has-error').text,
                       "You've already got this in your list"))
 
+    def test_error_message_are_clear_on_input(self):
+        """тест: сообщения об ошибках очищаются при ввод"""
+
+        # Эдит начинает список и вызывает ошибку валидации:
+
+
