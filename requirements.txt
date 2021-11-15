@@ -1,5 +1,5 @@
 Django==2.1.5  
-pip==19.0.1 
+pip==21.1 
 pytz==2018.9 
 selenium==3.141.0
 setuptools==39.1.0 
